@@ -1,7 +1,8 @@
 import { AgeService } from "../age.service";
+import { AgeServiceBuilder } from "./age-service.builder";
 
 describe("AgeService.isYoung", () => {
-  const ageService = new AgeService();
+  const ageService = new AgeServiceBuilder().build();
 
   it("throws error when age is less than or equal to 0", () => {
     expect(() => ageService.isYoung(0)).toThrowError();

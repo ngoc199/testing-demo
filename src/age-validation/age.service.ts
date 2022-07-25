@@ -1,20 +1,17 @@
 import { Injectable } from "@nestjs/common";
+import { AgeValidator } from "./age.validator";
 
 @Injectable()
 export class AgeService {
-  constructor() {}
+  constructor(private ageValidator: AgeValidator) {}
 
   validateAdult(age: number) {
-    this.validateAge(age);
+    this.ageValidator.validate(age);
     return age > 15;
   }
 
   isYoung(age: number) {
-    this.validateAge(age);
+    this.ageValidator.validate(age);
     return age < 30;
-  }
-
-  validateAge(age: number) {
-    if (age <= 0 || age >= 100) throw new Error(age + " is an invalid age");
   }
 }
