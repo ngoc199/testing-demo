@@ -1,0 +1,11 @@
+# IDE
+.vscode/
+
+# Build
+node_modules/
+build/
+dist/
+
+# Environment
+.env
+.env.local
