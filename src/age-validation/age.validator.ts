@@ -1,3 +1,6 @@
+import { Injectable } from "@nestjs/common";
+
+@Injectable()
 export class AgeValidator {
   validate(age: number) {
     if (!(Number.isInteger(age) && age > 0 && age < 200))

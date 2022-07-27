@@ -1,24 +1,27 @@
-import { IAge, IDatabase } from "../db.interface";
+import { Age } from "../age.model";
+import { IDatabase } from "../db.interface";
 
 export class FakeDatabase implements IDatabase {
-  private memory: Map<number, number>;
-  private idCounter: number;
+  private memory: Map<string, number>;
 
   constructor() {
     this.memory = new Map();
-    this.idCounter = 0;
   }
 
-  save(age: number): IAge {
-    this.idCounter++;
-    this.memory.set(this.idCounter, age);
+  private generateId() {
+    return (Math.random() + 1).toString(36).substring(12);
+  }
+
+  async save(age: number): Promise<Age> {
+    const id = this.generateId();
+    this.memory.set(id, age);
     return {
-      id: this.idCounter,
+      id: id,
       age,
     };
   }
 
-  findAll(): IAge[] {
+  async findAll(): Promise<Age[]> {
     return Array.from(this.memory).map(([id, age]) => ({
       id,
       age,

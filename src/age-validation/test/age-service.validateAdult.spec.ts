@@ -22,32 +22,32 @@ describe("AgeService.validateAdult", () => {
       .build();
   });
 
-  it("throws error when age is less than or equal to 0", () => {
-    expect(() => ageService.validateAdult(0)).toThrowError();
-    expect(() => ageService.validateAdult(-1)).toThrowError();
-    expect(fakeDb.findAll().length).toEqual(0);
+  it("throws error when age is less than or equal to 0", async () => {
+    await expect(() => ageService.validateAdult(0)).rejects.toThrowError();
+    await expect(() => ageService.validateAdult(-1)).rejects.toThrowError();
+    expect((await fakeDb.findAll()).length).toEqual(0);
   });
 
-  it("returns false when age is less than or equal to 15", () => {
+  it("returns false when age is less than or equal to 15", async () => {
     mockDoThing.mockReturnValueOnce(true);
-    expect(ageService.validateAdult(15)).toBeFalsy();
-    expect(fakeDb.findAll().length).toEqual(0);
+    expect(await ageService.validateAdult(15)).toBeFalsy();
+    expect((await fakeDb.findAll()).length).toEqual(0);
 
     mockDoThing.mockReturnValueOnce(false);
-    expect(ageService.validateAdult(10)).toBeFalsy();
-    expect(fakeDb.findAll().length).toEqual(0);
+    expect(await ageService.validateAdult(10)).toBeFalsy();
+    expect((await fakeDb.findAll()).length).toEqual(0);
   });
 
-  it("returns true when age is greater than 15", () => {
+  it("returns true when age is greater than 15", async () => {
     mockDoThing.mockReturnValueOnce(true);
-    expect(ageService.validateAdult(16)).toBeTruthy();
-    expect(fakeDb.findAll().length).toEqual(1);
+    expect(await ageService.validateAdult(16)).toBeTruthy();
+    expect((await fakeDb.findAll()).length).toEqual(1);
   });
 
-  it("throws error when age is greater than or equal to 200", () => {
-    expect(() => ageService.validateAdult(200)).toThrowError();
-    expect(fakeDb.findAll().length).toEqual(0);
-    expect(() => ageService.validateAdult(201)).toThrowError();
-    expect(fakeDb.findAll().length).toEqual(0);
+  it("throws error when age is greater than or equal to 200", async () => {
+    await expect(() => ageService.validateAdult(200)).rejects.toThrowError();
+    expect((await fakeDb.findAll()).length).toEqual(0);
+    await expect(() => ageService.validateAdult(201)).rejects.toThrowError();
+    expect((await fakeDb.findAll()).length).toEqual(0);
   });
 });
